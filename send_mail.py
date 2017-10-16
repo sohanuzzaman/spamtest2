@@ -15,6 +15,9 @@ lead_row_index = 1
 
 for item in all_receiver:
     for row in sender_email_ids:
+        #changing IP address
+        change_ip()
+
         #updating mail ID row index
         mialid_row_index += 1
 
@@ -35,7 +38,7 @@ for item in all_receiver:
             continue
 
         #sending email random times from this ID
-        sending_time = randrange(16,23)
+        sending_time = randrange(10, 15)
         for _ in range(sending_time):
 
             #updating row index of leaads sheet

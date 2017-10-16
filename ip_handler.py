@@ -1,4 +1,4 @@
-import ipgetter, subprocess, time
+import ipgetter, subprocess, time, os
 
 original_ip = '52.14.48.000'
 current_ip = ipgetter.myip()
@@ -12,9 +12,10 @@ def check_ip():
     return result
 
 def change_ip():
-    subprocess.call('"c:\Program Files (x86)\HMA! Pro VPN\bin\HMA! Pro VPN.exe" -connect', shell=True)
-    subprocess.call('"c:\Program Files (x86)\HMA! Pro VPN\bin\HMA! Pro VPN.exe" -changeip', shell=True)
+    os.system('connect.bat')
+    os.system('changeip.bat')
     time.sleep(5)
-    while check_ip() = False:
+    ip_changed = check_ip()
+    while ip_changed == False:
         time.sleep(7)
-        check_ip()
+        ip_changed = check_ip()
