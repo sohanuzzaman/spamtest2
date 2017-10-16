@@ -51,7 +51,7 @@ for item in all_receiver:
 
             try:
                 server.sendmail(email_id, email_receiver, message)
-                lead_err(lead_row_index, "Mail Sent")
+                print("mail sucessfully sent to {}".format(email_receiver))
             except Exception as ex:
                 lead_err(lead_row_index, "failed to send email via SMTP Err message {}".format(ex))
 
