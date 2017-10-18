@@ -67,6 +67,6 @@ for item in all_receiver:
                 lead_err(lead_row_index, "b.{}".format(ex))
 
         server.quit()
-        ##changing IP address
-        #change_ip()
+        #changing IP address
+        change_ip()
 
