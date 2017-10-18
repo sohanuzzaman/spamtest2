@@ -39,8 +39,8 @@ for item in all_receiver:
         # email login
         try:
             server.login(email_id, password)
-        except:
-            mailid_err(mialid_row_index)
+        except Exception as ex:
+            mailid_err(mialid_row_index, ex)
             continue
 
         #sending email random times from this ID
