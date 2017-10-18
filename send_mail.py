@@ -4,10 +4,15 @@ from random import randrange
 from ip_handler  import change_ip
 
 
-
 # email server credentials
-smtp_server = "smtp.gmail.com"
-smtp_port = "587"
+
+# selecting an gmail smtp server IP hardcoded whitelisted on HMA!pro vpn
+def select_smtp_ip():
+    available_ips = ["74.125.136.108", "74.125.133.108", "74.125.142.108", "74.125.143.108", "173.194.66.16", "173.194.66.109", "173.194.66.108", "173.194.67.108", "173.194.67.109", "173.194.70.108", "173.194.70.16"]
+    random.shuffle (available_ips)
+    server_ip = random.choice (available_ips)
+    return server_ip
+
 
 # defining the initial row indix
 mialid_row_index = 1
@@ -15,9 +20,9 @@ lead_row_index = 1
 
 for item in all_receiver:
     for row in sender_email_ids:
-        #changing IP address
-        change_ip()
-
+        #selecting an smtp server
+        smtp_server = select_smtp_ip()
+        smtp_port = "465"
         #updating mail ID row index
         mialid_row_index += 1
 
@@ -26,9 +31,10 @@ for item in all_receiver:
         name = row['name']
         occupation = row['occupation']
 
-        server = smtplib.SMTP(smtp_server, smtp_port)
+        server = smtplib.SMTP_SSL(smtp_server, smtp_port)
+        server.ehlo()  
+        server.starttls
         server.ehlo()
-        server.starttls()
 
         # email login
         try:
@@ -55,9 +61,12 @@ for item in all_receiver:
 
             try:
                 server.sendmail(email_id, email_receiver, message)
-                print("mail sucessfully sent to {}".format(email_receiver))
+                lead_err(lead_row_index, "c.sent")
+                #print("mail sucessfully sent to {}".format(email_receiver))
             except Exception as ex:
-                lead_err(lead_row_index, "failed to send email via SMTP Err message {}".format(ex))
+                lead_err(lead_row_index, "b.{}".format(ex))
 
         server.quit()
+        ##changing IP address
+        #change_ip()
 
