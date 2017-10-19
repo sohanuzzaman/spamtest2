@@ -93,7 +93,7 @@ all_receiver = receiver_list()
 def mailid_err(mialid_row_index, ex):
     global client
     try:
-        sender_email_id_sheet.update_cell(mialid_row_index, 5, ex)
+        sender_email_id_sheet.update_cell(mialid_row_index, 6, ex)
     except:
         client = auth_sheet()
         mailid_err(mialid_row_index, ex)

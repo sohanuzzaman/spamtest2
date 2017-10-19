@@ -20,3 +20,6 @@ def change_ip(server):
         time.sleep(40)
     else:
         pass
+
+
+change_ip("USA.Alabama.Montgomery.UDP.ovpn")

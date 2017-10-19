@@ -1,6 +1,6 @@
 from get_mailids import sender_email_ids, all_receiver, final_mail_subject, final_mail_body, mailid_err, lead_err
 import smtplib
-from random import randrange
+from random import randrange, shuffle, choice
 from ip_handler  import change_ip
 
 
@@ -9,8 +9,8 @@ from ip_handler  import change_ip
 # selecting an gmail smtp server IP hardcoded whitelisted on HMA!pro vpn
 def select_smtp_ip():
     available_ips = ["74.125.136.108", "74.125.133.108", "74.125.142.108", "74.125.143.108", "173.194.66.16", "173.194.66.109", "173.194.66.108", "173.194.67.108", "173.194.67.109", "173.194.70.108", "173.194.70.16"]
-    random.shuffle (available_ips)
-    server_ip = random.choice (available_ips)
+    shuffle (available_ips)
+    server_ip = choice (available_ips)
     return server_ip
 
 
@@ -30,6 +30,9 @@ for item in all_receiver:
         password = row['password']
         name = row['name']
         occupation = row['occupation']
+        server = row['server']
+        #changing IP address to the preferd server
+        change_ip(server)
 
         server = smtplib.SMTP_SSL(smtp_server, smtp_port)
         server.ehlo()  
@@ -67,6 +70,4 @@ for item in all_receiver:
                 lead_err(lead_row_index, "b.{}".format(ex))
 
         server.quit()
-        #changing IP address
-        change_ip()
 
