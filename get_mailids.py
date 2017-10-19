@@ -5,6 +5,7 @@ from unidecode import unidecode
 
 #authenticating google sheet
 def auth_sheet():
+    print("connecting to google sheet...")
     headers = gspread.httpsession.HTTPSession(headers={'Connection':'Keep-Alive'})
     # use creds to create a client to interact with the Google Drive API
     scope = ['https://spreadsheets.google.com/feeds']
@@ -27,6 +28,7 @@ email_leads = email_leads_sheet.get_all_records()
 
 
 def get_body_text():
+    print("collecting mail bodys...")
     amb = [] #defining an empty list to store all mail body texts
     for row in mailbodys:
         bt = row['texts']
@@ -39,6 +41,7 @@ final_mail_body = str(unidecode(raw_mail_body))
 
 
 def get_subject_text():
+    print("collecting mail subjects...")
     ams = [] #defining an empty list to store all mail body texts
     for row in mailsubjects:
         st = row['texts']
@@ -51,6 +54,7 @@ final_mail_subject = str(raw_mail_subject)
 
 
 def receiver_list():
+    print("collecting leads...")
     receivers = []
     limit_over = "b.(550, b'5.4.5 Daily user sending quota exceeded. m69sm15876126pfk.54 - gsmtp')"
     for row in email_leads:
@@ -73,6 +77,14 @@ def mailid_err(mialid_row_index, ex):
     except:
         client = auth_sheet()
         mailid_err(mialid_row_index, ex)
+
+def mailid_ip(mialid_row_index, ip):
+    global client
+    try:
+        sender_email_id_sheet.update_cell(mialid_row_index, 7, ip)
+    except:
+        client = auth_sheet()
+        mailid_ip(mialid_row_index, ip)
     
 
 def lead_err(lead_row_index, message):

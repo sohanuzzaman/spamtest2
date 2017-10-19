@@ -1,4 +1,4 @@
-from get_mailids import sender_email_ids, all_receiver, final_mail_subject, final_mail_body, mailid_err, lead_err
+from get_mailids import sender_email_ids, all_receiver, final_mail_subject, final_mail_body, mailid_err, mailid_ip, lead_err
 import smtplib
 from random import randrange, shuffle, choice
 from ip_handler  import change_ip
@@ -30,9 +30,10 @@ for item in all_receiver:
         password = row['password']
         name = row['name']
         occupation = row['occupation']
-        server = row['server']
+        vpn_server = row['server']
         #changing IP address to the preferd server
-        change_ip(server)
+        myip = change_ip(vpn_server)
+        print("initiling openvpn")
 
         server = smtplib.SMTP_SSL(smtp_server, smtp_port)
         server.ehlo()  
@@ -42,6 +43,7 @@ for item in all_receiver:
         # email login
         try:
             server.login(email_id, password)
+            mailid_ip(mialid_row_index, myip)
         except Exception as ex:
             mailid_err(mialid_row_index, ex)
             continue
