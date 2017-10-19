@@ -60,35 +60,11 @@ def receiver_list():
         if status == "a.pending" or limit_over:
             receivers.append(lead)
         else:
-            break
+            continue
     return receivers
 
 all_receiver = receiver_list()
 
-
-
-# # Handel reporting
-# def mailid_err_renew(mialid_row_index, ex):
-#     #use creds to create a client to interact with the Google Drive API
-#     scope = ['https://spreadsheets.google.com/feeds']
-#     creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
-#     client = gspread.authorize(creds)
-#
-#     sender_email_id_sheet = client.open("campaignmails").sheet1
-#     sender_email_id_sheet.update_cell(mialid_row_index, 5, ex)
-#
-# def lead_err_renew(lead_row_index, message):
-#     # use creds to create a client to interact with the Google Drive API
-#     scope = ['https://spreadsheets.google.com/feeds']
-#     creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
-#     client = gspread.authorize(creds)
-#
-#     email_leads_sheet = client.open("leads").sheet1
-#     email_leads_sheet.update_cell(lead_row_index, 2, message)
-
-
-
-# Handel reporting
 
 def mailid_err(mialid_row_index, ex):
     global client

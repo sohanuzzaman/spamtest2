@@ -4,9 +4,12 @@ import platform
 
 #Change IP function for linux
 def change_ip_linux(server):
+    #Disconnect previous connection
     subprocess.call("killall openvpn", shell=True)
+    time.sleep(10) # <<<< wait a bit more to make sure that the openvpn has been properly disconnected
     command = "openvpn --daemon --config ./UDP/{}".format(server)
     subprocess.call(command, shell=True)
+    time.sleep(45) # <<<< wait for connection to be established
 
 
 
