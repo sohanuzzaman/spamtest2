@@ -1,17 +1,8 @@
 from get_mailids import sender_email_ids, all_receiver, final_mail_subject, final_mail_body, mailid_err, mailid_ip, lead_err
+from smtp_conf import connect_smtp
 import smtplib
-from random import randrange, shuffle, choice
-from ip_handler  import change_ip
-
-
-# email server credentials
-
-# selecting an gmail smtp server IP hardcoded whitelisted on HMA!pro vpn
-def select_smtp_ip():
-    available_ips = ["74.125.136.108", "74.125.133.108", "74.125.142.108", "74.125.143.108", "173.194.66.16", "173.194.66.109", "173.194.66.108", "173.194.67.108", "173.194.67.109", "173.194.70.108", "173.194.70.16"]
-    shuffle (available_ips)
-    server_ip = choice (available_ips)
-    return server_ip
+from random import randrange
+from ip_handler import connect, disconnect
 
 
 # defining the initial row indix
@@ -20,30 +11,23 @@ lead_row_index = 1
 
 for item in all_receiver:
     for row in sender_email_ids:
-        #selecting an smtp server
-        smtp_server = select_smtp_ip()
-        smtp_port = "465"
-        #updating mail ID row index
+        connect()
+        #getting data from google sheet
         mialid_row_index += 1
-
         email_id = row['email_id']
         password = row['password']
         name = row['name']
         occupation = row['occupation']
-        vpn_server = row['server']
-        #changing IP address to the preferd server
-        myip = change_ip(vpn_server)
-        print("initiling openvpn")
 
-        server = smtplib.SMTP_SSL(smtp_server, smtp_port)
-        server.ehlo()  
+        print("connecting server")
+        server = connect_smtp(email_id)
+        server.ehlo()
         server.starttls
         server.ehlo()
 
         # email login
         try:
             server.login(email_id, password)
-            mailid_ip(mialid_row_index, myip)
         except Exception as ex:
             mailid_err(mialid_row_index, ex)
             continue
@@ -67,9 +51,10 @@ for item in all_receiver:
             try:
                 server.sendmail(email_id, email_receiver, message)
                 lead_err(lead_row_index, "c.sent")
-                #print("mail sucessfully sent to {}".format(email_receiver))
+                print("mail sucessfully sent to {}".format(email_receiver))
             except Exception as ex:
                 lead_err(lead_row_index, "b.{}".format(ex))
 
         server.quit()
+        disconnect()
 
