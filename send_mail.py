@@ -1,4 +1,4 @@
-from get_mailids import sender_email_ids, all_receiver, final_mail_subject, final_mail_body, mailid_err, mailid_ip, lead_err
+from get_mailids import sender_email_ids, all_receiver, get_random, mailid_err, mailid_ip, lead_err
 import smtplib
 from random import randrange, shuffle, choice
 from ip_handler import connect, disconnect
@@ -46,9 +46,10 @@ for item in all_receiver:
             except:
                 print ("there is no leads to send")
                 break
-
+            subject = get_random("subject")
+            body = get_random("body")
             message = """From: {0}\nTo: {1}\nSubject: {2}\n\n{3}\n\n{4}\n{5}
-            """.format(email_id, email_receiver, final_mail_subject, final_mail_body, name, occupation)
+            """.format(email_id, email_receiver, subject, body, name, occupation)
 
             try:
                 server.sendmail(email_id, email_receiver, message)
