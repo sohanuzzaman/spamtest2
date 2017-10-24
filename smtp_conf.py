@@ -1,8 +1,8 @@
-import re
+import re, smtplib, time
+from ip_handler import connect, disconnect
 
 
 def get_smtp_conf(email_id):
-    global smtp_server
     s = re.findall(".*(?<=\@)(.*?)(?=\.)", "From: {}".format(email_id))
     domain = s[0]
     if domain == "gmail":
@@ -14,10 +14,9 @@ def get_smtp_conf(email_id):
     else:
         print("email address is not recognised py smtp detector")
 
-    print(smtp_server)
+    print("Detected SMTP server is {}".format(smtp_server))
     return smtp_server
 
-get_smtp_conf("sosjgoihsgh@hotmail.com")
 
 def connect_smtp(email_id):
     #selecting an smtp server
@@ -25,10 +24,10 @@ def connect_smtp(email_id):
     smtp_port = "587"
     try:
         server = smtplib.SMTP(smtp_server, smtp_port)
-        return server
     except:
         print("failed connecting smtp server :( retrying ...")
         disconnect()
-        time.sleep(12)
+        time.sleep(10)
         connect()
         connect_smtp()
+    return server

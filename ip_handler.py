@@ -1,42 +1,11 @@
-import subprocess, time, os
-import ipgetter
-#import platform
+import subprocess, time, os, platform, ipgetter
+
 
 def check_ip():
     myip = ipgetter.myip()
     return myip
 
-def disconnect_windows():
-    os.system("disconnect.bat")
-def connect_windows():
-    os.system("connect.bat")
-
-def disconnect_linux():
-    pass
-
-def connect_linux():
-    pass
-
-def disconnect():
-    if platform.system() == 'Linux':
-        disconnect_linux()
-    else:
-        disconnect_windows()
-    time.sleep(4)
-
-def connect():
-    if platform.system() == 'Linux':
-        connect_linux()
-    else:
-        connect_windows()
-    time.sleep(9)
-    ip = check_ip()
-    print ("The new ip address is {}".format(ip))
-
-
-
-
-#Change IP function for linux
+# #Change IP function for linux
 # def change_ip(vpn_server):
 #     print("initializing changing IP address...")
 #     #Disconnect previous connection
@@ -53,16 +22,46 @@ def connect():
 #     return myip
 
 
-#change_ip("USA.Alabama.Montgomery.UDP.ovpn")
-# changing IP by HMA! pro by running windows batch file
-# def change_ip(vpn_server):
-#     if platform.system() == 'Linux':
-#         change_ip_linux(vpn_server)
-#     elif platform.system() == "win32":
-#         os.system('connect.bat')
-#         os.system('changeip.bat')
-#         time.sleep(40)
-#     else:
-#         pass
-#     myip = check_ip()
-#     return myip
+def connect_linux():
+    pass
+
+
+def disconnect_linux():
+    pass
+
+
+def connect_win():
+    os.system("connect.bat")
+    time.sleep(8)
+
+
+def disconnect_win():
+    os.system("disconnect.bat")
+    time.sleep(3)
+
+
+def connect():
+    print("Connecting GP internet...")
+    if platform.system() == 'Linux':
+        print("Linux system ditected")
+        connect_linux()
+    elif platform.system() == "Windows":
+        print("Windows system ditected")
+        connect_win()
+    else:
+        pass
+    myip = check_ip()
+    print("New assigned IP Address is {}".format(myip))
+
+
+def disconnect():
+    print("Disconnecting GP internet...")
+    if platform.system() == 'Linux':
+        disconnect_linux()
+    elif platform.system() == "Windows":
+        disconnect_win()
+    else:
+        pass
+
+
+connect()

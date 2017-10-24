@@ -6,7 +6,6 @@ from unidecode import unidecode
 #authenticating google sheet
 def auth_sheet():
     print("connecting to google sheet...")
-    headers = gspread.httpsession.HTTPSession(headers={'Connection':'Keep-Alive'})
     # use creds to create a client to interact with the Google Drive API
     scope = ['https://spreadsheets.google.com/feeds']
     creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
@@ -71,26 +70,18 @@ all_receiver = receiver_list()
 
 
 def mailid_err(mialid_row_index, ex):
-    global client
-    try:
-        sender_email_id_sheet.update_cell(mialid_row_index, 6, ex)
-    except:
-        client = auth_sheet()
-        mailid_err(mialid_row_index, ex)
+    client = auth_sheet()
+    sender_email_id_sheet = client.open("campaignmails").sheet1
+    sender_email_id_sheet.update_cell(mialid_row_index, 6, ex)
 
 def mailid_ip(mialid_row_index, ip):
-    global client
-    try:
-        sender_email_id_sheet.update_cell(mialid_row_index, 7, ip)
-    except:
-        client = auth_sheet()
-        mailid_ip(mialid_row_index, ip)
+    client = auth_sheet()
+    sender_email_id_sheet = client.open("campaignmails").sheet1
+    sender_email_id_sheet.update_cell(mialid_row_index, 7, ip)
+
     
 
 def lead_err(lead_row_index, message):
-    global client
-    try:
-        email_leads_sheet.update_cell(lead_row_index, 2, message)
-    except:
-        client = auth_sheet()
-        lead_err(lead_row_index, message)
+    client = auth_sheet()
+    email_leads_sheet = client.open("leads").sheet1
+    email_leads_sheet.update_cell(lead_row_index, 2, message)

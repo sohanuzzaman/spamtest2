@@ -1,8 +1,8 @@
 from get_mailids import sender_email_ids, all_receiver, final_mail_subject, final_mail_body, mailid_err, mailid_ip, lead_err
-from smtp_conf import connect_smtp
 import smtplib
-from random import randrange
+from random import randrange, shuffle, choice
 from ip_handler import connect, disconnect
+from smtp_conf import connect_smtp
 
 
 # defining the initial row indix
@@ -11,23 +11,25 @@ lead_row_index = 1
 
 for item in all_receiver:
     for row in sender_email_ids:
+        #connect to the internet in order to get assigned with a new IP
         connect()
-        #getting data from google sheet
         mialid_row_index += 1
         email_id = row['email_id']
         password = row['password']
         name = row['name']
         occupation = row['occupation']
-
-        print("connecting server")
+        #changing IP address to the preferd server
+        #myip = change_ip()
+        # print("initiling openvpn")
         server = connect_smtp(email_id)
         server.ehlo()
-        server.starttls
+        server.starttls(keyfile=None, certfile=None, context=None)
         server.ehlo()
 
         # email login
         try:
             server.login(email_id, password)
+            # mailid_ip(mialid_row_index, myip)
         except Exception as ex:
             mailid_err(mialid_row_index, ex)
             continue
@@ -56,5 +58,5 @@ for item in all_receiver:
                 lead_err(lead_row_index, "b.{}".format(ex))
 
         server.quit()
+        #disconnect the internet in order to get a new IP
         disconnect()
-
