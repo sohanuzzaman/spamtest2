@@ -25,6 +25,12 @@ mailbodys = mailbody_sheet.get_all_records()
 mailsubjects = mailsubject_sheet.get_all_records()
 email_leads = email_leads_sheet.get_all_records()
 
+# reconnect google sheet
+def update_sheet():
+    global client, sender_email_id_sheet, email_leads_sheet
+    client = auth_sheet()
+    sender_email_id_sheet = client.open("campaignmails").sheet1
+    email_leads_sheet = client.open("leads").sheet1
 
 def get_body_text():
     print("collecting mail bodys...")
@@ -78,18 +84,22 @@ all_receiver = receiver_list()
 
 
 def mailid_err(mialid_row_index, ex):
-    client = auth_sheet()
-    sender_email_id_sheet = client.open("campaignmails").sheet1
-    sender_email_id_sheet.update_cell(mialid_row_index, 6, ex)
+    try:
+        sender_email_id_sheet.update_cell(mialid_row_index, 6, ex)
+    except:
+        update_sheet()
+        mailid_err(mialid_row_index, ex)
 
-def mailid_ip(mialid_row_index, ip):
-    client = auth_sheet()
-    sender_email_id_sheet = client.open("campaignmails").sheet1
-    sender_email_id_sheet.update_cell(mialid_row_index, 7, ip)
+
+# def mailid_ip(mialid_row_index, ip):
+#
+#     sender_email_id_sheet.update_cell(mialid_row_index, 7, ip)
 
     
 
 def lead_err(lead_row_index, message):
-    client = auth_sheet()
-    email_leads_sheet = client.open("leads").sheet1
-    email_leads_sheet.update_cell(lead_row_index, 2, message)
+    try:
+        email_leads_sheet.update_cell(lead_row_index, 2, message)
+    except:
+        update_sheet()
+        lead_err(lead_row_index, message)
