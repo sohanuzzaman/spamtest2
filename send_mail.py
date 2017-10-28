@@ -1,4 +1,4 @@
-from get_mailids import sender_email_ids, all_receiver, get_random, mailid_err, mailid_ip, lead_err
+from get_mailids import sender_email_ids, all_receiver, get_random, mailid_err, lead_err
 import smtplib
 from random import randrange, shuffle, choice
 from ip_handler import connect, disconnect
@@ -57,7 +57,9 @@ for item in all_receiver:
                 print("mail sucessfully sent to {}".format(email_receiver))
             except Exception as ex:
                 lead_err(lead_row_index, "b.{}".format(ex))
-
-        server.quit()
+        try:
+            server.quit()
+        except:
+            continue
         #disconnect the internet in order to get a new IP
         disconnect()

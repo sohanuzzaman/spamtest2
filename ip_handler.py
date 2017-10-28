@@ -23,11 +23,11 @@ def check_ip():
 
 
 def connect_linux():
-    pass
+    subprocess.call("wvdial connect &", shell=True)
 
 
 def disconnect_linux():
-    pass
+    subprocess.call("killall wvdial", shell=True)
 
 
 def connect_win():
@@ -62,6 +62,3 @@ def disconnect():
         disconnect_win()
     else:
         pass
-
-
-connect()
