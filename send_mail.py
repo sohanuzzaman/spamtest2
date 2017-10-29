@@ -1,7 +1,7 @@
 from get_mailids import sender_email_ids, all_receiver, get_random, mailid_err, lead_err
 import smtplib
-from random import randrange, shuffle, choice
-from ip_handler import connect, disconnect
+from random import randrange
+from ip_handler import reconnect
 from smtp_conf import connect_smtp
 
 
@@ -9,10 +9,17 @@ from smtp_conf import connect_smtp
 mialid_row_index = 1
 lead_row_index = 1
 
+reconnect_init = 0
+reconnect_now = randrange(7, 15)
+
 for item in all_receiver:
     for row in sender_email_ids:
-        #connect to the internet in order to get assigned with a new IP
-        connect()
+        # reconnecting internet after logging in 7 - 10 emails
+        reconnect_init += 1
+        if reconnect_init == reconnect_now:
+            reconnect_init = 0
+            reconnect()
+
         mialid_row_index += 1
         email_id = row['email_id']
         password = row['password']
@@ -61,5 +68,3 @@ for item in all_receiver:
             server.quit()
         except:
             continue
-        #disconnect the internet in order to get a new IP
-        disconnect()

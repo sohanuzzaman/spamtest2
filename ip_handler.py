@@ -62,3 +62,8 @@ def disconnect():
         disconnect_win()
     else:
         pass
+
+
+def reconnect():
+    disconnect()
+    connect()
