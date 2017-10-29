@@ -24,10 +24,12 @@ def check_ip():
 
 def connect_linux():
     subprocess.call("nohup wvdial connect &", shell=True)
+    time.sleep(25)
 
 
 def disconnect_linux():
     subprocess.call("nohup killall wvdial &", shell=True)
+    time.sleep(10)
 
 
 def connect_win():
