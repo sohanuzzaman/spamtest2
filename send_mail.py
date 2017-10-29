@@ -30,7 +30,7 @@ for item in all_receiver:
         # print("initiling openvpn")
         server = connect_smtp(email_id)
         server.ehlo()
-        server.starttls(keyfile=None, certfile=None, context=None)
+        server.starttls()
         server.ehlo()
 
         # email login
