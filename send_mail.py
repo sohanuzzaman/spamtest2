@@ -15,10 +15,10 @@ reconnect_now = randrange(7, 15)
 for item in all_receiver:
     for row in sender_email_ids:
         # reconnecting internet after logging in 7 - 10 emails
-        reconnect_init += 1
-        if reconnect_init == reconnect_now:
-            reconnect_init = 0
-            reconnect()
+        # reconnect_init += 1
+        # if reconnect_init == reconnect_now:
+        #     reconnect_init = 0
+        #     reconnect()
 
         mialid_row_index += 1
         email_id = row['email_id']
