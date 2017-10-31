@@ -13,20 +13,18 @@ reconnect_now = randrange(5, 10)
 
 for item in all_receiver:
     for row in sender_email_ids:
-        #reconnecting internet after logging in 5 - 10 emails
-        reconnect_init += 1
-        if reconnect_init == reconnect_now:
-            reconnect_init = 0
-            reconnect()
-
         email_id = row['email_id']
         password = row['password']
         name = row['name']
         occupation = row['occupation']
+        vpn_server = row['vpn_server']
         mialid_row_index = row['index']
-        #changing IP address to the preferd server
-        #myip = change_ip()
-        # print("initiling openvpn")
+        # #reconnecting internet after logging in 5 - 10 emails
+        # reconnect_init += 1
+        # if reconnect_init == reconnect_now:
+        #     reconnect_init = 0
+        #     reconnect()
+        reconnect(vpn_server)
         server = connect_smtp(email_id)
         server.ehlo()
         server.starttls()

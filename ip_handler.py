@@ -22,17 +22,27 @@ def check_ip():
 #     return myip
 
 
-def connect_linux():
-    # Connecting GSM by WVDIAL
-    subprocess.call("nohup wvdial connect &", shell=True)
-    #waiting 100 secoends to make sure it is connected
+def connect_linux(vpn_server):
+    # # Connecting GSM by WVDIAL
+    # subprocess.call("nohup wvdial connect &", shell=True)
+
+    # #seeting up pppd(Dial up internet) priority over wifi and ethernet
+    # subprocess.call("route del default", shell=True)
+    # subprocess.call("route add default gw 10.64.64.64", shell=True)
+
+
+    # connecting openvpn
+    command = "openvpn {}".format(vpn_server)
+    subprocess.call(command, shell=True)
+
+
+    # waiting 100 secoends to make sure it is connected
     time.sleep(100)
-    #seeting up pppd(Dial up internet) priority over wifi and ethernet
-    subprocess.call("route del default", shell=True)
-    subprocess.call("route add default gw 10.64.64.64", shell=True)
+
 
 
 def disconnect_linux():
+    subprocess.call("kullall openvpn", shell=True)
     subprocess.call("nohup killall wvdial &", shell=True)
     time.sleep(30)
 
@@ -47,11 +57,11 @@ def disconnect_win():
     time.sleep(3)
 
 
-def connect():
+def connect(vpn_server):
     print("Connecting GP internet...")
     if platform.system() == 'Linux':
         print("Linux system ditected")
-        connect_linux()
+        connect_linux(vpn_server)
     elif platform.system() == "Windows":
         print("Windows system ditected")
         connect_win()
@@ -71,6 +81,6 @@ def disconnect():
         pass
 
 
-def reconnect():
+def reconnect(vpn_server):
     disconnect()
-    connect()
+    connect(vpn_server)
