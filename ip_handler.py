@@ -23,13 +23,18 @@ def check_ip():
 
 
 def connect_linux():
+    # Connecting GSM by WVDIAL
     subprocess.call("nohup wvdial connect &", shell=True)
-    time.sleep(25)
+    #waiting 100 secoends to make sure it is connected
+    time.sleep(100)
+    #seeting up pppd(Dial up internet) priority over wifi and ethernet
+    subprocess.call("route del default", shell=True)
+    subprocess.call("route add default gw 10.64.64.64", shell=True)
 
 
 def disconnect_linux():
     subprocess.call("nohup killall wvdial &", shell=True)
-    time.sleep(10)
+    time.sleep(30)
 
 
 def connect_win():
