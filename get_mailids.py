@@ -18,12 +18,14 @@ sender_email_id_sheet = client.open("campaignmails").sheet1
 mailbody_sheet = client.open("bodytext").sheet1
 mailsubject_sheet = client.open("subjecttext").sheet1
 email_leads_sheet = client.open("leads").sheet1
+links_sheet = client.open("links").sheet1
 
 #Collecting data from google sheets
 sender_email_ids = sender_email_id_sheet.get_all_records()
 mailbodys = mailbody_sheet.get_all_records()
 mailsubjects = mailsubject_sheet.get_all_records()
 email_leads = email_leads_sheet.get_all_records()
+raw_links = links_sheet.get_all_records()
 
 # reconnect google sheet
 def update_sheet():
@@ -32,12 +34,26 @@ def update_sheet():
     sender_email_id_sheet = client.open("campaignmails").sheet1
     email_leads_sheet = client.open("leads").sheet1
 
+
+def get_links():
+    links = []
+    for row in raw_links:
+        link = row['links']
+        links.append(link)
+    shuffle (links)
+    return links
+links = get_links()
+
 def get_body_text():
     print("collecting mail bodys...")
     amb = [] #defining an empty list to store all mail body texts
     for row in mailbodys:
-        bt = row['texts']
+        bt1 = row['texts']
+        bt2 = row['texts2']
+        url = choice(links)
+        bt = str.join(' ', (bt1, url, bt2))
         amb.append(bt)
+        print(bt)
     shuffle (amb)
     return amb
 
