@@ -28,7 +28,7 @@ def connect_smtp(email_id, vpn_server):
         server = smtplib.SMTP(smtp_server, smtp_port)
     except:
         print("failed connecting smtp server :( retrying ...")
-        reconnect(vpn_server)
+        reconnect(vpn_server, 0)
         time.sleep(10)
         connect_smtp(email_id)
     return server

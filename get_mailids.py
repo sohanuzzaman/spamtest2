@@ -53,7 +53,6 @@ def get_body_text():
         url = choice(links)
         bt = str.join(' ', (bt1, url, bt2))
         amb.append(bt)
-        print(bt)
     shuffle (amb)
     return amb
 
