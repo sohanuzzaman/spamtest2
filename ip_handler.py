@@ -35,7 +35,7 @@ def connect_linux(vpn_server):
 
 
     # connecting openvpn
-    command = "sudo openvpn --daemon --config {}".format(vpn_server)
+    command = "openvpn --daemon --config ovpn/{}".format(vpn_server)
     subprocess.call(command, shell=True)
 
 
