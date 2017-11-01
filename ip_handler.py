@@ -45,7 +45,7 @@ def connect_linux(vpn_server):
 
 
 def disconnect_linux():
-    subprocess.call("kullall openvpn", shell=True)
+    subprocess.call("killall openvpn", shell=True)
     # subprocess.call("nohup killall wvdial &", shell=True)
     time.sleep(30)
 
