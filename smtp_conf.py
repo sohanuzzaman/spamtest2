@@ -1,5 +1,7 @@
 import re, smtplib, time
-from ip_handler import connect, disconnect
+from ip_handler import reconnect
+from random import choice, shuffle
+
 
 
 def get_smtp_conf(email_id):
@@ -18,7 +20,7 @@ def get_smtp_conf(email_id):
     return smtp_server
 
 
-def connect_smtp(email_id):
+def connect_smtp(email_id, vpn_server):
     #selecting an smtp server
     smtp_server = get_smtp_conf(email_id)
     smtp_port = "587"
@@ -26,8 +28,7 @@ def connect_smtp(email_id):
         server = smtplib.SMTP(smtp_server, smtp_port)
     except:
         print("failed connecting smtp server :( retrying ...")
-        disconnect()
+        reconnect(vpn_server)
         time.sleep(10)
-        connect()
         connect_smtp(email_id)
     return server
