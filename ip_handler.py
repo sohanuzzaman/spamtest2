@@ -40,8 +40,7 @@ def connect_linux(vpn_server):
 
 
     # waiting 100 secoends to make sure it is connected
-    time.sleep(100)
-
+    time.sleep(60)
 
 
 def disconnect_linux():
