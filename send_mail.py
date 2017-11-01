@@ -9,7 +9,6 @@ from smtp_conf import connect_smtp
 lead_row_index = 1
 
 reconnect_init = 0
-reconnect_now = randrange(5, 10)
 
 for item in all_receiver:
     for row in sender_email_ids:
@@ -19,12 +18,7 @@ for item in all_receiver:
         occupation = row['occupation']
         vpn_server = row['vpn_server']
         mialid_row_index = row['index']
-        # #reconnecting internet after logging in 5 - 10 emails
-        # reconnect_init += 1
-        # if reconnect_init == reconnect_now:
-        #     reconnect_init = 0
-        #     reconnect()
-        reconnect(vpn_server)
+        reconnect_init = reconnect(vpn_server, reconnect_init)
         server = connect_smtp(email_id, vpn_server)
         server.ehlo()
         server.starttls()

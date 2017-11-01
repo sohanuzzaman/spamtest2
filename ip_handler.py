@@ -1,5 +1,8 @@
 import subprocess, time, os, platform, ipgetter
+from random import randrange
 
+# determin the frequency of reconnecting internet every 5 -10 times
+reconnect_now = randrange(5, 10)
 
 def check_ip():
     myip = ipgetter.myip()
@@ -81,6 +84,11 @@ def disconnect():
         pass
 
 
-def reconnect(vpn_server):
+def reconnect(vpn_server, reconnect_init):
+    # reconnect_init += 0
+    # if reconnect_init == reconnect_now:
+    #     reconnect_init = 0
+    #     reconnect()
     disconnect()
     connect(vpn_server)
+    return  reconnect_init
