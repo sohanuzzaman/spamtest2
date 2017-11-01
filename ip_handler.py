@@ -46,7 +46,7 @@ def connect_linux(vpn_server):
 
 def disconnect_linux():
     subprocess.call("kullall openvpn", shell=True)
-    subprocess.call("nohup killall wvdial &", shell=True)
+    # subprocess.call("nohup killall wvdial &", shell=True)
     time.sleep(30)
 
 
@@ -61,7 +61,7 @@ def disconnect_win():
 
 
 def connect(vpn_server):
-    print("Connecting GP internet...")
+    print("Connecting to new internet...")
     if platform.system() == 'Linux':
         print("Linux system ditected")
         connect_linux(vpn_server)
