@@ -75,7 +75,7 @@ def connect(vpn_server):
 
 
 def disconnect():
-    print("Disconnecting GP internet...")
+    print("Disconnecting vpn.. internet...")
     if platform.system() == 'Linux':
         disconnect_linux()
     elif platform.system() == "Windows":
