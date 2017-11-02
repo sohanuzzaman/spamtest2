@@ -25,8 +25,8 @@ for item in all_receiver:
         # reconnect_init = reconnect(vpn_server, reconnect_init)
         server = connect_smtp(email_id)
         server.ehlo()
-        server.starttls()
-        server.ehlo()
+        # server.starttls()
+        # server.ehlo()
 
         # email login
         try:
