@@ -20,12 +20,12 @@ def get_smtp_conf(email_id):
     return smtp_server
 
 
-def connect_smtp(email_id, vpn_server):
+def connect_smtp(email_id):
     #selecting an smtp server
     smtp_server = get_smtp_conf(email_id)
-    smtp_port = "465"
+    smtp_port = "587"
     try:
-        server = smtplib.SMTP_SSL(smtp_server, smtp_port)
+        server = smtplib.SMTP(smtp_server, smtp_port)
     except:
         print("failed connecting smtp server :( retrying ...")
         # reconnect(vpn_server, 0)

@@ -23,7 +23,7 @@ for item in all_receiver:
         vpn_server = row['vpn_server']
         mialid_row_index = row['index']
         # reconnect_init = reconnect(vpn_server, reconnect_init)
-        server = connect_smtp(email_id, vpn_server)
+        server = connect_smtp(email_id)
         server.ehlo()
         server.starttls()
         server.ehlo()
