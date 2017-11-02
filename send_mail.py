@@ -6,7 +6,7 @@ from email.header import Header
 from email.utils import formataddr
 from random import randrange
 from ip_handler import reconnect
-from smtp_conf import connect_smtp
+from smtp_conf import get_smtp_conf
 
 
 # defining the initial row indix
@@ -20,10 +20,12 @@ for item in all_receiver:
         password = row['password']
         name = row['name']
         occupation = row['occupation']
-        vpn_server = row['vpn_server']
         mialid_row_index = row['index']
-        # reconnect_init = reconnect(vpn_server, reconnect_init)
-        server = connect_smtp(email_id)
+
+        # Connecting to SMTP
+        smtp_server = get_smtp_conf(email_id)
+        smtp_port = "465"
+        server = smtplib.SMTP_SSL(smtp_server, smtp_port)
         server.ehlo()
         # server.starttls()
         # server.ehlo()
@@ -56,15 +58,13 @@ for item in all_receiver:
             msg['From'] = formataddr((str(Header(name)), email_id))
             msg['To'] = email_receiver
             msg['Subject'] = subject
-            html = "{0}\n\n{1}\n{2}".format(body, name, occupation)
-            msg.attach(MIMEText(html, 'html'))
+            body_text = "{0}\n\n{1}\n{2}".format(body, name, occupation)
+            msg.attach(MIMEText(body_text))
             try:
-                server.sendmail(email_id, email_receiver, msg.as_string())
+                server.sendmail(email_id, email_receiver, str(msg))
                 lead_err(lead_row_index, "c.sent")
                 print("mail sucessfully sent to {}".format(email_receiver))
             except Exception as ex:
                 lead_err(lead_row_index, "b.{}".format(ex))
-        try:
-            server.quit()
-        except:
-            continue
+                break
+        server.quit()
