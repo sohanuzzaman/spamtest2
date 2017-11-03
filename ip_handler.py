@@ -40,13 +40,13 @@ def connect_linux(vpn_server):
 
 
     # waiting 100 secoends to make sure it is connected
-    time.sleep(60)
+    time.sleep(50)
 
 
 def disconnect_linux():
     subprocess.call("killall openvpn", shell=True)
     # subprocess.call("nohup killall wvdial &", shell=True)
-    time.sleep(30)
+    time.sleep(10)
 
 
 def connect_win():
@@ -84,7 +84,7 @@ def disconnect():
 
 
 def reconnect(vpn_server):
-    if not vpn_server == "same"
+    if not vpn_server == "same":
         disconnect()
         connect(vpn_server)
     else:
