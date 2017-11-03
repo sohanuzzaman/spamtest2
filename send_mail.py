@@ -27,11 +27,11 @@ for item in all_receiver:
 
         # Connecting to SMTP
         smtp_server = get_smtp_conf(email_id)
-        smtp_port = "465"
-        server = smtplib.SMTP_SSL(smtp_server, smtp_port)
+        smtp_port = "587"
+        server = smtplib.SMTP(smtp_server, smtp_port)
         server.ehlo()
-        # server.starttls()
-        # server.ehlo()
+        server.starttls()
+        server.ehlo()
 
         # email login
         try:
