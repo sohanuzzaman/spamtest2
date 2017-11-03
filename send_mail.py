@@ -12,7 +12,6 @@ from smtp_conf import get_smtp_conf
 # defining the initial row indix
 lead_row_index = 1
 
-reconnect_init = 0
 
 for item in all_receiver:
     for row in sender_email_ids:
@@ -21,6 +20,10 @@ for item in all_receiver:
         name = row['name']
         occupation = row['occupation']
         mialid_row_index = row['index']
+        vpn_server = row['vpn_server']
+
+        # Connecting to vpn
+        reconnect(vpn_server)
 
         # Connecting to SMTP
         smtp_server = get_smtp_conf(email_id)

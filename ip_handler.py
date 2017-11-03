@@ -83,11 +83,9 @@ def disconnect():
         pass
 
 
-def reconnect(vpn_server, reconnect_init):
-    # reconnect_init += 0
-    # if reconnect_init == reconnect_now:
-    #     reconnect_init = 0
-    #     reconnect()
-    disconnect()
-    connect(vpn_server)
-    return  reconnect_init
+def reconnect(vpn_server):
+    if not vpn_server == "same"
+        disconnect()
+        connect(vpn_server)
+    else:
+        pass
