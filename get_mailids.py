@@ -72,7 +72,7 @@ raw_mail_subject = get_subject_text()
 
 def get_random(mail_text):
     rand_mail_body = choice(raw_mail_body)
-    final_mail_body = str(unidecode(rand_mail_body))
+    final_mail_body = unidecode(rand_mail_body)
     rand_mail_subject = choice(raw_mail_subject)
     final_mail_subject = str(rand_mail_subject)
     if mail_text == "body":
