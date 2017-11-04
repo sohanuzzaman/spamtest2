@@ -39,7 +39,7 @@ def get_links():
     links = []
     for row in raw_links:
         link = row['links']
-        links.append(link)
+        links.append(unidecode(link))
     shuffle (links)
     return links
 links = get_links()
@@ -74,7 +74,7 @@ def get_random(mail_text):
     rand_mail_body = choice(raw_mail_body)
     final_mail_body = unidecode(rand_mail_body)
     rand_mail_subject = choice(raw_mail_subject)
-    final_mail_subject = str(rand_mail_subject)
+    final_mail_subject = unidecode(rand_mail_subject)
     if mail_text == "body":
         return final_mail_body
     else:
