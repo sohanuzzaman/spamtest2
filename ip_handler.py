@@ -1,5 +1,6 @@
 import subprocess, time, os, platform, ipgetter
 from random import randrange
+from get_mailids import update_sheet
 
 # determin the frequency of reconnecting internet every 5 -10 times
 reconnect_now = randrange(5, 10)
@@ -41,6 +42,7 @@ def connect_linux(vpn_server):
 
     # waiting 100 secoends to make sure it is connected
     time.sleep(50)
+    update_sheet()
 
 
 def disconnect_linux():
