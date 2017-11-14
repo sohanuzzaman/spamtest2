@@ -26,15 +26,13 @@ for item in all_receiver:
         reconnect(vpn_server)
 
         # Connecting to SMTP
-        smtp_server = get_smtp_conf(email_id)
-        smtp_port = "587"
-        server = smtplib.SMTP(smtp_server, smtp_port)
-        server.ehlo()
-        server.starttls()
-        server.ehlo()
-
-        # email login
         try:
+            smtp_server = get_smtp_conf(email_id)
+            smtp_port = "587"
+            server = smtplib.SMTP(smtp_server, smtp_port)
+            server.ehlo()
+            server.starttls()
+            server.ehlo()
             server.login(email_id, password)
             # mailid_ip(mialid_row_index, myip)
         except Exception as ex:
@@ -70,4 +68,7 @@ for item in all_receiver:
             except Exception as ex:
                 lead_err(lead_row_index, "b.{}".format(ex))
                 break
-        server.quit()
+        try:
+            server.quit()
+        except:
+            pass
