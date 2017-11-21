@@ -23,10 +23,9 @@ def get_bcc_lead():
             bcc_mail.append(lead)
         except:
             pass
-    recevers = ", ".join(bcc_mail)
-    print(recevers)
-    return recevers
-get_bcc_lead()
+    # recevers = ", ".join(bcc_mail)
+    # print(recevers)
+    return bcc_mail
 
 for item in all_receiver:
     for row in sender_email_ids:
@@ -74,14 +73,14 @@ for item in all_receiver:
             msg = MIMEMultipart('alternative')
             msg['From'] = formataddr((str(Header(name)), email_id))
             msg['To'] = email_receiver
-            msg["Bcc"] = bcc_recevers
             msg['Subject'] = subject
             body_text = "{0}\n\n{1}\n{2}".format(body, name, occupation)
             msg.attach(MIMEText(body_text))
             try:
-                server.sendmail(email_id, email_receiver, str(msg))
+                server.sendmail(email_id, [email_receiver] + bcc_recevers, str(msg))
                 lead_err(lead_row_index, "c.sent")
                 print("mail sucessfully sent to {}".format(email_receiver))
+                print(*bcc_recevers, sep='\n')
             except Exception as ex:
                 lead_err(lead_row_index, "b.{}".format(ex))
                 break

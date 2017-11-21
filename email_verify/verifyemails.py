@@ -2,8 +2,8 @@ import os
 import requests
 import json
 
-inputfile = "{}/raw_leads.txt".format(os.getcwd())
-outputfile = "{}/pure_leads.txt".format(os.getcwd())
+inputfile = "{}/email_verify/raw_leads.txt".format(os.getcwd())
+outputfile = "{}/email_verify/pure_leads.txt".format(os.getcwd())
 
 # Delete the contents of a file
 def delete_file_contents(path):
