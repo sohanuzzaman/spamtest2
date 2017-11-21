@@ -12,6 +12,21 @@ from smtp_conf import get_smtp_conf
 # defining the initial row indix
 lead_row_index = 1
 
+def get_bcc_lead():
+    global lead_row_index
+    bcc_mail = []
+    count = randrange(10, 20)
+    lead_row_index += count
+    for _ in range(count):
+        try:
+            lead = (all_receiver.pop(0))
+            bcc_mail.append(lead)
+        except:
+            pass
+    recevers = ", ".join(bcc_mail)
+    print(recevers)
+    return recevers
+get_bcc_lead()
 
 for item in all_receiver:
     for row in sender_email_ids:
@@ -40,7 +55,7 @@ for item in all_receiver:
             continue
 
         #sending email random times from this ID
-        sending_time = randrange(10, 15)
+        sending_time = randrange(2, 5)
         for _ in range(sending_time):
 
             #updating row index of leaads sheet
@@ -48,6 +63,7 @@ for item in all_receiver:
 
             try:
                 email_receiver = (all_receiver.pop(0))
+                bcc_recevers = get_bcc_lead()
             except:
                 print ("there is no leads to send")
                 break
@@ -58,6 +74,7 @@ for item in all_receiver:
             msg = MIMEMultipart('alternative')
             msg['From'] = formataddr((str(Header(name)), email_id))
             msg['To'] = email_receiver
+            msg["Bcc"] = bcc_recevers
             msg['Subject'] = subject
             body_text = "{0}\n\n{1}\n{2}".format(body, name, occupation)
             msg.attach(MIMEText(body_text))

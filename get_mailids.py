@@ -39,7 +39,7 @@ def get_links():
     links = []
     for row in raw_links:
         link = row['links']
-        links.append(unidecode(link))
+        links.append(str(link))
     shuffle (links)
     return links
 links = get_links()
