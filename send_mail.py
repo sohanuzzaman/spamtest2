@@ -54,7 +54,7 @@ for item in all_receiver:
             continue
 
         #sending email random times from this ID
-        sending_time = randrange(2, 5)
+        sending_time = randrange(2, 4)
         for _ in range(sending_time):
 
             #updating row index of leaads sheet
